@@ -20,11 +20,10 @@ function Footer() {
 
               <li>
                 <a
-                  href="mailto: 
-                carrental@gmail.com"
+                  href="#"
                 >
                   <i className="fa-solid fa-envelope"></i>
-                  &nbsp; carrental@xyz.com
+                  &nbsp; car-rental@xyz.com
                 </a>
               </li>
 
@@ -33,9 +32,9 @@ function Footer() {
                   style={{ fontSize: "14px" }}
                   target="_blank"
                   rel="noreferrer"
-                  href="https://devrahuls.vercel.app/"
+                  href="#"
                 >
-                  Design with ❤️ by Rahul
+                  Designed by Awais
                 </a>
               </li>
             </ul>

@@ -1,12 +1,7 @@
-import Banner from "./components/Banner";
-import BookCar from "./components/BookCar";
-import Faq from "./components/Faq";
-import Footer from "./components/Footer";
-import Hero from "./components/Hero";
+import Home from "./pages/Home";
+import Contact from './pages/Contact'
 import Navbar from "./components/NavBar";
-import PickCar from "./components/PickCar";
-import PlanTrip from "./components/PlanTrip";
-import Testimonials from "./components/Testimonials";
+import { Route, Routes } from "react-router-dom";
 
 
 
@@ -14,15 +9,11 @@ function App() {
  
   return (
     <>
-    <Navbar/>
-      <Hero/>
-      <BookCar/>
-      <PlanTrip/>
-      <PickCar/>
-      <Banner/>
-      <Testimonials/>
-      <Faq/>
-      <Footer/>
+    <Navbar />
+      <Routes>
+        <Route index path="/" element={<Home />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
     </>
   )
 }

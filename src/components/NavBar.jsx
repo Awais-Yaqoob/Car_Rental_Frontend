@@ -59,7 +59,7 @@ function Navbar() {
               <img src={Logo} alt="logo-img" />
             </Link>
           </div>
-          <ul className="navbar__links">
+          {/* <ul className="navbar__links">
             <li>
               <Link className="home-link" to="/">
                 Home
@@ -95,12 +95,12 @@ function Navbar() {
                 Contact
               </Link>
             </li>
-          </ul>
+          </ul> */}
           <div className="navbar__buttons">
-            <Link className="navbar__buttons__sign-in" to="/">
+            <Link className="navbar__buttons__sign-in" to="/sign-in">
               Sign In
             </Link>
-            <Link className="navbar__buttons__register" to="/">
+            <Link className="navbar__buttons__register" to="/sign-up">
               Register
             </Link>
           </div>

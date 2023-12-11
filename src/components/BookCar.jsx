@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 import CarAudi from "../images/cars-big/audia1.jpg";
 import CarGolf from "../images/cars-big/golf6.jpg";
 import CarToyota from "../images/cars-big/toyotacamry.jpg";
@@ -16,6 +17,23 @@ function BookCar() {
   const [pickTime, setPickTime] = useState("");
   const [dropTime, setDropTime] = useState("");
   const [carImg, setCarImg] = useState("");
+  const [carList, setCarList] = useState([]);
+  const [selectedCar, setSelectedCar] = useState("");
+  
+  useEffect(()=>{
+
+    axios.get("http://localhost:3000/cars")
+    .then((response)=>{
+     // console.log(response.data);
+      setCarList(response.data);
+      //console.log(carType);
+    })
+    
+
+  },[])
+
+
+
 
   // modal infos
   const [name, setName] = useState("");
@@ -89,8 +107,23 @@ function BookCar() {
     }
   }, [modal]);
 
+
+
+
   // confirm modal booking
   const confirmBooking = (e) => {
+    let bookingData = {
+      firstName: name,
+    lastName: lastName,
+    phoneNumber: phone,
+    age: age,
+    email: email,
+    address: address,
+    city: city,
+    zipCode: zipcode
+    }
+    let response  = axios.post("http://localhost:3000/bookings", bookingData);
+      console.log("booking" , response.data);
     e.preventDefault();
     setModal(!modal);
     const doneMsg = document.querySelector(".booking-done");
@@ -99,8 +132,13 @@ function BookCar() {
 
   // taking value of booking inputs
   const handleCar = (e) => {
-    setCarType(e.target.value);
-    setCarImg(e.target.value);
+    setSelectedCar(e.target.value);
+    setCarType(carList[e.target.value].name);
+    setCarImg(carList[e.target.value].image)
+  //   let jsonKey= JSON.parse(e.target.value);
+  //   setCarType(jsonKey.name);
+  //  setCarImg(jsonKey.image);
+  //  console.log("jsonkey" , jsonKey);
   };
 
   const handlePick = (e) => {
@@ -120,29 +158,29 @@ function BookCar() {
   };
 
   // based on value name show car img
-  let imgUrl;
-  switch (carImg) {
-    case "Audi A1 S-Line":
-      imgUrl = CarAudi;
-      break;
-    case "VW Golf 6":
-      imgUrl = CarGolf;
-      break;
-    case "Toyota Camry":
-      imgUrl = CarToyota;
-      break;
-    case "BMW 320 ModernLine":
-      imgUrl = CarBmw;
-      break;
-    case "Mercedes-Benz GLK":
-      imgUrl = CarMercedes;
-      break;
-    case "VW Passat CC":
-      imgUrl = CarPassat;
-      break;
-    default:
-      imgUrl = "";
-  }
+ // let imgUrl;
+  // switch (carImg) {
+  //   case "Audi A1 S-Line":
+  //     imgUrl = CarAudi;
+  //     break;
+  //   case "VW Golf 6":
+  //     imgUrl = CarGolf;
+  //     break;
+  //   case "Toyota Camry":
+  //     imgUrl = CarToyota;
+  //     break;
+  //   case "BMW 320 ModernLine":
+  //     imgUrl = CarBmw;
+  //     break;
+  //   case "Mercedes-Benz GLK":
+  //     imgUrl = CarMercedes;
+  //     break;
+  //   case "VW Passat CC":
+  //     imgUrl = CarPassat;
+  //     break;
+  //   default:
+  //     imgUrl = "";
+  // }
 
   // hide message
   const hideMessage = () => {
@@ -179,16 +217,14 @@ function BookCar() {
                     <i className="fa-solid fa-car"></i> &nbsp; Select Your Car
                     Type <b>*</b>
                   </label>
-                  <select value={carType} onChange={handleCar}>
+                  <select value={selectedCar} onChange={handleCar}>
                     <option>Select your car type</option>
-                    <option value="Audi A1 S-Line">Audi A1 S-Line</option>
-                    <option value="VW Golf 6">VW Golf 6</option>
-                    <option value="Toyota Camry">Toyota Camry</option>
-                    <option value="BMW 320 ModernLine">
-                      BMW 320 ModernLine
-                    </option>
-                    <option value="Mercedes-Benz GLK">Mercedes-Benz GLK</option>
-                    <option value="VW Passat CC">VW Passat CC</option>
+                    {carList.map((key, index)=>(
+                       <option value={index} >{key.name}</option>
+                       
+                    )
+                    )}
+                   
                   </select>
                 </div>
 
@@ -199,11 +235,11 @@ function BookCar() {
                   </label>
                   <select value={pickUp} onChange={handlePick}>
                     <option>Select pick up location</option>
-                    <option>Delhi</option>
-                    <option>Kolkata</option>
-                    <option>Bengaluru</option>
-                    <option>Mumbai</option>
-                    <option>Goa</option>
+                    <option>Lahore</option>
+                    <option>Karachi</option>
+                    <option>Sialkot</option>
+                    <option>Islamabad</option>
+                    <option>Muree</option>
                   </select>
                 </div>
 
@@ -214,11 +250,11 @@ function BookCar() {
                   </label>
                   <select value={dropOff} onChange={handleDrop}>
                     <option>Select drop off location</option>
-                    <option>Delhi</option>
-                    <option>Kolkata</option>
-                    <option>Bengaluru</option>
-                    <option>Mumbai</option>
-                    <option>Goa</option>
+                    <option>Lahore</option>
+                    <option>Karachi</option>
+                    <option>Sialkot</option>
+                    <option>Islamabad</option>
+                    <option>Muree</option>
                   </select>
                 </div>
 
@@ -330,7 +366,7 @@ function BookCar() {
             <h5>
               <span>Car -</span> {carType}
             </h5>
-            {imgUrl && <img src={imgUrl} alt="car_img" />}
+            {carImg && <img src={carImg} alt="car_img" />}
           </div>
         </div>
         {/* personal info */}
